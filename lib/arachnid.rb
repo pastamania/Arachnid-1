@@ -16,7 +16,7 @@ class Arachnid
 		@exclude_urls_with_hash = options[:exclude_urls_with_hash] ? options[:exclude_urls_with_hash] : false
 		@exclude_urls_with_extensions = options[:exclude_urls_with_extensions] ? options[:exclude_urls_with_extensions] : false
 		@proxy_list = options[:proxy_list] ? options[:proxy_list] : false
-		
+
 		@debug = options[:debug] ? options[:debug] : false
 	end
 
@@ -32,7 +32,7 @@ class Arachnid
 		@global_queue = []
 
 		@global_queue << @start_url
-		
+
 		while(@global_queue.size > 0 && (max_urls.nil? || @global_visited.size.to_i < max_urls))
 			temp_queue = @global_queue
 
@@ -40,10 +40,10 @@ class Arachnid
 
 				begin
 					ip,port,user,pass = grab_proxy
- 
-					request = Typhoeus::Request.new(q, :timeout => 10000, :follow_location => true) if ip == nil
-					request = Typhoeus::Request.new(q, :timeout => 10000, :follow_location => true, :proxy => "#{ip}:#{port}") if ip != nil && user == nil
-					request = Typhoeus::Request.new(q, :timeout => 10000, :follow_location => true, :proxy => "#{ip}:#{port}", :proxy_username => user, :proxy_password => pass) if user != nil
+
+					request = Typhoeus::Request.new(q, :timeout => 10000, :followlocation => true) if ip == nil
+					request = Typhoeus::Request.new(q, :timeout => 10000, :followlocation => true, :proxy => "#{ip}:#{port}") if ip != nil && user == nil
+					request = Typhoeus::Request.new(q, :timeout => 10000, :followlocation => true, :proxy => "#{ip}:#{port}", :proxy_username => user, :proxy_password => pass) if user != nil
 
 					request.on_complete do |response|
 
@@ -53,7 +53,7 @@ class Arachnid
 
 						links.each do |link|
 							if(internal_link?(link, response.effective_url) && !@global_visited.include?(make_absolute(link, response.effective_url)) && no_hash_in_url?(link) && ignore_extensions(link))
-								
+
 								sanitized_link = sanitize_link(split_url_at_hash(link))
 								if(sanitized_link)
 
