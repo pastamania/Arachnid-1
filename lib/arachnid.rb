@@ -60,6 +60,7 @@ class Arachnid
 									absolute_link = make_absolute(sanitized_link, response.effective_url)
 									if(absolute_link)
 										@global_queue << absolute_link
+									puts "adding #{absolute_link} to queue" if @debug == true
 									end
 								end
 							end
